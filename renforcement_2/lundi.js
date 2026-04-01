@@ -42,7 +42,7 @@ console.log("La somme des notes: " + somme);
 let moyene = 0;
 moyene += somme / notes.length;
 
-console.log("La moyenne du classe est: " + moyene.toFixed(2));
+console.log("La moyenne du classe est: " + parseFloat(moyene.toFixed(2)));
 
 // la note la plus haute
 let notePlusHaute = notes[0];

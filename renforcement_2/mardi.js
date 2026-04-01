@@ -288,19 +288,76 @@ console.log(arrChiffre.join(" | "));
 // *Challenge 3 — Le système de notation 
 
 let avis = [
-  { pseudo: "Ali", note: 20, commentaire: "Top recette !", date: "2026-03-01" },
-  { pseudo: "Sara", note: 16, commentaire: "Très bon", date: "2026-03-02" },
-  { pseudo: "Yassine", note: 12, commentaire: "Moyen", date: "2026-03-03" },
-  { pseudo: "Lina", note: 20, commentaire: "Excellent", date: "2026-03-04" },
-  { pseudo: "Omar", note: 8, commentaire: "Pas terrible", date: "2026-03-05" },
-  { pseudo: "Nadia", note: 16, commentaire: "Bon goût", date: "2026-03-06" },
-  { pseudo: "Karim", note: 4, commentaire: "Je n'aime pas", date: "2026-03-07" },
-  { pseudo: "Salma", note: 20, commentaire: "Parfait !", date: "2026-03-08" },
-  { pseudo: "Hicham", note: 12, commentaire: "Correct", date: "2026-03-09" },
-  { pseudo: "Imane", note: 16, commentaire: "Bien fait", date: "2026-03-10" },
-  { pseudo: "Rachid", note: 8, commentaire: "Bof", date: "2026-03-11" },
-  { pseudo: "Khadija", note: 10, commentaire: "Passable", date: "2026-03-12" },
-  { pseudo: "Mehdi", note: 12, commentaire: "Ça passe", date: "2026-03-13" },
-  { pseudo: "Fatima", note: 16, commentaire: "J’ai aimé", date: "2026-03-14" },
-  { pseudo: "Anas", note: 20, commentaire: "Magnifique", date: "2026-03-15" }
+  { pseudo: "Ali", note: 5, commentaire: "Top recette !", date: "2026-03-01" },
+  { pseudo: "Sara", note: 4, commentaire: "Très bon", date: "2026-03-02" },
+  { pseudo: "Yassine", note: 2.5, commentaire: "Moyen", date: "2026-03-03" },
+  { pseudo: "Lina", note: 5, commentaire: "Excellent", date: "2026-03-04" },
+  { pseudo: "Omar", note: 1, commentaire: "Pas terrible", date: "2026-03-05" },
+  { pseudo: "Nadia", note: 3, commentaire: "Bon goût", date: "2026-03-06" },
+  { pseudo: "Karim", note: 1.6, commentaire: "Je n'aime pas", date: "2026-03-07" },
+  { pseudo: "Salma", note: 5, commentaire: "Parfait !", date: "2026-03-08" },
+  { pseudo: "Hicham", note: 2, commentaire: "Correct", date: "2026-03-09" },
+  { pseudo: "Imane", note: 3, commentaire: "Bien fait", date: "2026-03-10" },
+  { pseudo: "Rachid", note: 2, commentaire: "Bof", date: "2026-03-11" },
+  { pseudo: "Khadija", note: 2.5, commentaire: "Passable", date: "2026-03-12" },
+  { pseudo: "Mehdi", note: 3, commentaire: "Ça passe", date: "2026-03-13" },
+  { pseudo: "Fatima", note: 4, commentaire: "J'ai aimé", date: "2026-03-14" },
+  { pseudo: "Anas", note: 5, commentaire: "Magnifique", date: "2026-03-15" }
 ];
+
+// 1. Calcule la note moyenne arrondie à 1 décimale
+let moyenneNotes = 0;
+for(let i = 0 ; i < avis.length ; i++){
+    moyenneNotes += avis[i].note;
+}
+console.log("La moyenne du class: "+parseFloat(moyenneNotes.toFixed(1)));
+
+
+// 2. Compte combien d'avis par note (combien de 1 étoile, combien de 2 étoiles, etc.)
+let arrNotes = avis.map(a => Math.floor(a.note));
+console.log(arrNotes)
+for (let n = 1; n <= 5; n++) {
+  let count = 0;
+  for (let i = 0; i < arrNotes.length; i++) {
+    if (arrNotes[i] === n) {
+      count++;
+    }
+  }
+  console.log("Voici le nombre des avis qui ont " + n + " étoile: " + count);
+}
+
+// 3. Filtre les avis positifs (≥ 4) et les avis négatifs (≤ 2)
+
+let positif = [];
+let negatif = [];
+for(let i = 0 ; i < avis.length ; i++){
+  if(avis[i].note>=4){
+    positif.push(avis[i].pseudo);
+  }else if(avis[i].note <=2){
+    negatif.push(avis[i].pseudo)
+  }
+}
+// console.log(positif)
+console.log("Voici les client qui ont fait une avis positif: "+positif.join(' | '));
+console.log("Voici les client qui ont fait une avis negatif: "+negatif.join(' | '));
+
+// 4. Trie les avis du plus récent au plus ancien
+let year = avis[0].date[0]+avis[0].date[1]+avis[0].date[2]+avis[0].date[3];
+let mounth = avis[0].date[5]+avis[0].date[6];
+let day = avis[0].date[8]+avis[0].date[9];
+let ancienArray = [];
+for(let i = 0 ; i < avis.length ; i++){
+    if(year > (avis[i].date[i]+avis[i].date[1]+avis[i].date[2]+avis[i].date[3])){
+        ancienArray.push(avis[i].pseudo);
+    }else if (year>(avis[i].date[i]+avis[i].date[1]+avis[i].date[2]+avis[i].date[3])){
+      year = (avis[i].date[i]+avis[i].date[1]+avis[i].date[2]+avis[i].date[3]);
+      mounth = (avis[i].date[5]+avis[i].date[6]);
+      day = (avis[i].date[8]+avis[i].date[9]);
+    }else if (year == (avis[i].date[i]+avis[i].date[1]+avis[i].date[2]+avis[i].date[3])){
+      if(mounth > (avis[i].date[5]+avis[i].date[6])){
+        ancienArray.push(avis[i].pseudo);
+      }else if(mounth < (avis[i].date[5]+avis[i].date[6])){
+        ancienArray.push(avis[i].pseudo);
+      }
+    }
+}
